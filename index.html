@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Barış İsteği</title>
+  <style>
+    :root {
+      --btn-bg: #FF8C94;
+      --btn-bg-hover: #FF6F7D;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      background: linear-gradient(135deg, #FFD1DC, #FFF1BA);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow: hidden;
+    }
+    #message {
+      font-size: 5vw;
+      max-width: 90%;
+      color: #333;
+      margin-bottom: 4vw;
+      text-align: center;
+      text-shadow: 1px 1px 2px #fff;
+    }
+    button {
+      padding: 3vw 6vw;
+      margin: 2vw;
+      font-size: 4vw;
+      cursor: pointer;
+      border: none;
+      border-radius: 2vw;
+      background: var(--btn-bg);
+      color: #fff;
+      box-shadow: 0 1vw 1.5vw rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, background 0.3s;
+    }
+    button:hover {
+      background: var(--btn-bg-hover);
+    }
+    #peaceBtn.expanded {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      transform: none !important;
+      font-size: 8vw !important;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--btn-bg);
+      z-index: 10;
+    }
+    /* Lotus flowers around the edges */
+    .decor {
+      position: absolute;
+      width: 15vw;
+      opacity: 0.8;
+    }
+    .lotus1 { top: 2vw; left: 2vw; transform: rotate(-15deg); }
+    .lotus2 { top: 2vw; right: 2vw; transform: rotate(10deg); }
+    .lotus3 { bottom: 2vw; left: 2vw; transform: rotate(20deg); }
+    .lotus4 { bottom: 2vw; right: 2vw; transform: rotate(-20deg); }
+    /* Hamsters holding signs */
+    .hamster {
+      position: absolute;
+      width: 25vw;
+    }
+    .hamster1 { top: 50%; left: 5%; transform: translateY(-50%); }
+    .hamster2 { top: 50%; right: 5%; transform: translateY(-50%); }
+    .sign {
+      position: absolute;
+      top: -4vw;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      padding: 1vw 2vw;
+      border: 0.4vw solid var(--btn-bg);
+      border-radius: 1vw;
+      font-size: 3vw;
+      color: var(--btn-bg-hover);
+      white-space: nowrap;
+    }
+    /* Overlay message style */
+    #overlayMessage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 223, 230, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 5vw;
+      font-size: 4vw;
+      color: #333;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorative lotus flowers -->
+  <img src="https://www.sochic.com/blog/wp-content/uploads/2023/04/lotus-cicegi.jpg" class="decor lotus1" alt="Lotus">
+  <img src="https://www.sochic.com/blog/wp-content/uploads/2023/04/lotus-cicegi.jpg" class="decor lotus2" alt="Lotus">
+  <img src="https://www.sochic.com/blog/wp-content/uploads/2023/04/lotus-cicegi.jpg" class="decor lotus3" alt="Lotus">
+  <img src="https://www.sochic.com/blog/wp-content/uploads/2023/04/lotus-cicegi.jpg" class="decor lotus4" alt="Lotus">
+
+  <!-- Hamsters with signs -->
+  <div class="hamster hamster1">
+    <img src="https://i.natgeofe.com/k/f8d9c848-d28c-43fe-9b7a-fbb3affbc413/hamsters-black-bellied-square_4x3.jpg" alt="Hamster" style="width:100%; border-radius:50%; box-shadow:0 1vw 2vw rgba(0,0,0,0.2);">
+    <div class="sign">Özür Dilerim</div>
+  </div>
+  <div class="hamster hamster2">
+    <img src="https://i.natgeofe.com/k/f8d9c848-d28c-43fe-9b7a-fbb3affbc413/hamsters-black-bellied-square_4x3.jpg" alt="Hamster" style="width:100%; border-radius:50%; box-shadow:0 1vw 2vw rgba(0,0,0,0.2);">
+    <div class="sign">Özür Dilerim</div>
+  </div>
+
+  <div id="message">Bilge özür dilerim lütfen barışalım</div>
+  <div id="buttons">
+    <button id="peaceBtn">Barış</button>
+    <button id="dontPeaceBtn">Barışma</button>
+  </div>
+
+  <script>
+    let scale = 1;
+    const peaceBtn = document.getElementById('peaceBtn');
+    const dontPeaceBtn = document.getElementById('dontPeaceBtn');
+
+    dontPeaceBtn.addEventListener('click', () => {
+      if (!peaceBtn.classList.contains('expanded')) {
+        scale += 0.5;
+        peaceBtn.style.transform = `scale(${scale})`;
+        if (scale >= 5) {
+          peaceBtn.classList.add('expanded');
+        }
+      }
+    });
+
+    peaceBtn.addEventListener('click', () => {
+      // Overlay message appears
+      const overlay = document.createElement('div');
+      overlay.id = 'overlayMessage';
+      overlay.innerText = 'Seni seviyorum. Bir daha böyle bir şey yaşanmayacak. Birini seveceksem senden başkası olmasını istemiyorum. Her şey için çok çabalayacağım. En iyi sen biliyorsun. Bu son haftayı unutacağız. Bir daha böyle şeyler yaşanmayacak.';
+      document.body.appendChild(overlay);
+    });
+  </script>
+</body>
+</html>
